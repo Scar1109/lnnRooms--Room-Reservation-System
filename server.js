@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require("path");
+
 const app = express();
 
-const dbConfig = require('./db')
+const dbconfig = require('./db')
 
 const port = process.env.PORT || 5000;
 

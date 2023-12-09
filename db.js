@@ -1,17 +1,20 @@
-const  mongoose  = require("mongoose");
+const { default: mongoose } = require("mongoose");
+mongoose.set('strictQuery', true);
 
-var mongoURL = 'mongodb+srv://kaveendinethma:tPe8c9MonohetNgy@cluster1109.gdgbtfl.mongodb.net/InnRooms'
+var mongoURL = 'mongodb+srv://Scar1109:Scar1234@cluster1109.gdgbtfl.mongodb.net/InnRooms'
 
-mongoose.connect(mongoURL,{userUnifiedTopology: true,useNewUrlParser: true})
+mongoose.connect(process.env.MONGODB_URI || mongoURL ,{useUnifiedTopology : true ,useNewUrlParser : true ,})
 
-var connection = mongoose.connection;
 
-connection.on('error',()=>{
-    console.log('MongoDB connection failed')
+
+var connection = mongoose.connection
+
+connection.on('error', ()=> {
+    console.log('MongDB Connection Failed')
 })
 
-connection.on('connected',()=>{
-    console.log('MongoDB connection success')
+connection.on('connected' , ()=>{
+    console.log('MongoDB Connection Successful')
 })
 
-module.exports = mongoose;
+module.exports  = mongoose
