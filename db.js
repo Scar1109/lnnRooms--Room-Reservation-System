@@ -5,8 +5,6 @@ var mongoURL = 'mongodb+srv://Scar1109:Scar1234@cluster1109.gdgbtfl.mongodb.net/
 
 mongoose.connect(process.env.MONGODB_URI || mongoURL ,{useUnifiedTopology : true ,useNewUrlParser : true ,})
 
-
-
 var connection = mongoose.connection
 
 connection.on('error', ()=> {
