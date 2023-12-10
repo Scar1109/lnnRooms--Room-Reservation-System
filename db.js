@@ -3,7 +3,7 @@ mongoose.set('strictQuery', true);
 
 var mongoURL = 'mongodb+srv://Scar1109:Scar1234@cluster1109.gdgbtfl.mongodb.net/InnRooms'
 
-mongoose.connect(process.env.MONGODB_URI || mongoURL ,{useUnifiedTopology : true ,useNewUrlParser : true ,})
+mongoose.connect(process.env.MONGODB_URI || mongoURL)
 
 var connection = mongoose.connection
 
