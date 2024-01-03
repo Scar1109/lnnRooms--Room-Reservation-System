@@ -1,42 +1,43 @@
-import React, {useEffect,useState} from 'react'
-import axios from 'axios';
-import Room from '../components/Room';
-import BeatLoader from "react-spinners/BeatLoader";
-function HomeScreen() {
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Room from "../components/Room";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
+function HomeScreen() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
     useEffect(() => {
         let getRes = async () => {
             try {
-                    setLoading(true);
-                    const response = (await axios.get('api/rooms/getAllRooms')).data;
-                    setRooms(response);
-                    setLoading(false);
-                }
-                catch (error) {
-                    setError(true);
-                    console.log(error);
+                setLoading(true);
+                const response = (await axios.get("api/rooms/getAllRooms"))
+                    .data;
+                setRooms(response);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
             }
-        }
+        };
         getRes();
-    },[])
+    }, []);
 
     return (
-        <div className='row justify-content-center mt-4'>
-            {loading ? <div className='spinner'><BeatLoader
-                color="#000000"
-                size={15}
-                speedMultiplier={0.6}
-                /></div> : error ? <p>An error happen please try again</p> : rooms.map( room => {
-                    return<div className='col-md-9 mt-2'>
-                            <Room room = {room} />
+        <div className="row justify-content-center mt-4">
+            {loading ? (
+                <Loader />
+            ) : rooms ? (
+                rooms.map((room) => {
+                    return (
+                        <div className="col-md-9 mt-2">
+                            <Room room={room} />
                         </div>
-                })}
+                    );
+                })
+            ) : <Error />}
         </div>
-    )
+    );
 }
 
-export default HomeScreen
+export default HomeScreen;
