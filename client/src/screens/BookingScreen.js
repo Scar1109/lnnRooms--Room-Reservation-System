@@ -1,19 +1,20 @@
 import React, { useEffect , useState} from 'react'
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function BookingScreen({match}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [room, setRoom] = useState({});
-    const roomId = match.params.roomId;
-    console.log(match.params.roomId);
+    let { roomId } = useParams();
+    
 
 
     useEffect(() => {
         let getRes = async () => {
             try {
                     setLoading(true);
-                    const response = (await axios.post('api/rooms/getRoomById', {id : match.params.roomId})).data;
+                    const response = (await axios.post("/api/rooms/getRoomById", { RoomId : roomId })).data;
                     setRoom(response);
                     setLoading(false);
                 }
@@ -27,7 +28,7 @@ function BookingScreen({match}) {
 
     return (
         <div>
-            <h1>{match.params.roomId}</h1>
+            <h1>{room.name}</h1>
         </div>
     )
 }

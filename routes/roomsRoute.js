@@ -14,10 +14,9 @@ router.get('/getAllRooms',async (req,res)=>{
 
 router.post('/getRoomById',async (req,res)=>{
 
-    const roomId = req.body.roomId;
-
+    const roomId = req.body.RoomId;
     try{
-        const room = await roomModel.findOne({_id: roomId});
+        const room = await roomModel.findOne({_id : roomId})
         res.send(room);
     }catch(error){
         return res.status(400).json({message: error});
