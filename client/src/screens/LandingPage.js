@@ -13,7 +13,7 @@ function LandingPage() {
                 <h2 data-aos ='zoom-in' data-aos-duration="1300" style={{color:'white' , fontSize:'120px' ,fontWeight:'normal', fontFamily: 'cursive', letterSpacing : '10px'}}>InnRooms</h2>
                 <h1 data-aos ='zoom-out' data-aos-duration="1000" className='mt-5' style={{color:'white'}} >"More Destinations. More Ease. More Affordable."</h1>
 
-                <Link to = '/home' > <button className='btnlan' style={{color : 'black'}}>Get Started</button></Link>
+                <Link to = '/home' > <button className='btnlan' style={{color : 'black'}}>Book Now</button></Link>
             </div>
 
         </div>

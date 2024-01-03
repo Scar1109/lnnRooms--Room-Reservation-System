@@ -24,7 +24,7 @@ function HomeScreen() {
     },[])
 
     return (
-        <div className='row justify-content-center mt-5'>
+        <div className='row justify-content-center mt-4'>
             {loading ? <div className ="spinner-border" role="status" style={{marginTop : "370px"}}>
                     
                 </div> : error ? <p>An error happen please try again</p> : rooms.map( room => {

@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 body {
   margin: 0;
@@ -7,11 +8,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'poppins', sans-serif;
+  background-color: #ddd0c8;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.navbar {
+  background-color: #212121;
 }
 
 .navbar-nav {
@@ -25,10 +32,14 @@ code {
 }
 
 .bShadow {
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   padding: 20px 0px;
   border-radius: 11px;
   margin-top: 20px;
+}
+
+.bShadow:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .landing{
@@ -51,4 +62,19 @@ code {
   border-radius: 8px !important;
   margin-top: 25px !important;
   padding: 5px;
+}
+
+.bigImg{
+  width: 400px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popupDescription {
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.popupTitle {
+  font-size: 20px;
 }

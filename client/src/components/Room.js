@@ -1,6 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Modal,Carousel} from 'react-bootstrap'
 
 function Room({room}) {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className='row bShadow'>
             <div className='col-md-4'>
@@ -13,9 +19,32 @@ function Room({room}) {
                 <p>Type : {room.roomType}</p>
 
                 <div style={{float : 'right'}}>
-                    <button className='btn btn-primary' style={{backgroundColor : "#323232", boxShadow : "none", borderColor : "#323232"}}>View Details</button>
+                    <button className='btn btn-primary' style={{backgroundColor : "#323232", boxShadow : "none", borderColor : "#323232"}} onClick={handleShow}>View Details</button>
                 </div>
             </div>
+
+            <Modal show={show} onHide={handleClose} size='large'>
+                <Modal.Header closeButton>
+                <Modal.Title className='popupTitle'>{room.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Carousel>
+                    
+                {room.imgURL.map((img) => {
+                return <Carousel.Item>
+                    <img
+                    className="d-block w-100 bigImg"
+                    src= {img}
+                    alt="First slide"
+                    />
+                </Carousel.Item>
+                })}
+
+
+                </Carousel>
+                <p className='popupDescription'>{room.description}</p>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }
