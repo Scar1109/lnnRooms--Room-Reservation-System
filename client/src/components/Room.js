@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Modal,Carousel} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 function Room({room}) {
     const [show, setShow] = useState(false);
@@ -19,7 +20,11 @@ function Room({room}) {
                 <p>Type : {room.roomType}</p>
 
                 <div style={{float : 'right'}}>
-                    <button className='btn btn-primary' style={{backgroundColor : "#323232", boxShadow : "none", borderColor : "#323232"}} onClick={handleShow}>View Details</button>
+                    <Link to={`/book/${room._id}`}>
+                        
+                    <button className='btn btn-primary m-3' style={{backgroundColor : "#323232", boxShadow : "none", borderColor : "#323232"}}>Book Now</button>
+                    </Link>
+                    <button className='btn btn-primary' style={{backgroundColor : "#323232", boxShadow : "none", borderColor : "#323232", marginRight : '-65px'}} onClick={handleShow}>View Details</button>
                 </div>
             </div>
 

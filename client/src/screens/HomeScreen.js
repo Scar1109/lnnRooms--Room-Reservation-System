@@ -12,7 +12,7 @@ function HomeScreen() {
         let getRes = async () => {
             try {
                     setLoading(true);
-                    const response = (await axios.request('api/rooms/getAllRooms')).data;
+                    const response = (await axios.get('api/rooms/getAllRooms')).data;
                     setRooms(response);
                     setLoading(false);
                 }
