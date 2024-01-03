@@ -35,7 +35,9 @@ function HomeScreen() {
                         </div>
                     );
                 })
-            ) : <Error />}
+            ) : (
+                <Error />
+            )}
         </div>
     );
 }
