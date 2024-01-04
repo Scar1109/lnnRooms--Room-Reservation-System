@@ -1,17 +1,19 @@
 import React, { useState} from "react";
-
-
+import axios from "axios";
 function LoginScreen() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function login(){
+    async function login(){
         const user = {email, password};
-        console.log(user);
+        try {
+            const results = await axios.post('api/users/login', user).data;
+        } catch (error) {
+            console.log(error);
+        }
     }
     
-
     return <div className="container">
     <div className="row justify-content-center mt-5">
         <div className="col-md-5">

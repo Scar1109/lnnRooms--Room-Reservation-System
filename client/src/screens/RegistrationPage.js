@@ -1,17 +1,23 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function RegistrationPage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [username, setUsername] = useState("");
+    const [userName, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("");
 
-    function register() {
+    async function register() {
         if (password === cPassword) {
-            const user = { firstName, lastName, username, email, password, cPassword };
-            console.log(user);
+            const user = { firstName, lastName, userName, email, password};
+            
+            try {
+                const results = await axios.post('api/users/register', user).data;
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             alert("Password does not match");
         }
@@ -50,7 +56,7 @@ function RegistrationPage() {
                         type="text"
                         className="form-control inputs"
                         placeholder="Username"
-                        value={username}
+                        value={userName}
                         onChange={(e) => {
                             setUsername(e.target.value);
                         }}
