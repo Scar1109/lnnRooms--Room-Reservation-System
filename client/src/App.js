@@ -4,6 +4,8 @@ import{BrowserRouter, Route, Routes} from 'react-router-dom'
 import HomeScreen from './screens/HomeScreen';
 import LandingPage from './screens/LandingPage';
 import BookingScreen from './screens/BookingScreen';
+import RegistrationPage from './screens/RegistrationPage';
+import LoginScreen from './screens/LoginScreen';
 
 function App() {
 
@@ -18,6 +20,8 @@ function App() {
             <Route path="/home" element={<HomeScreen />} exact />
             <Route path="/" element={<LandingPage />} exact />
             <Route path="/book/:roomId" element={<BookingScreen />} exact />
+            <Route path='/register' element={<RegistrationPage />} exact />
+            <Route path='/login' element={<LoginScreen />} exact />
             
           </Routes>
         </BrowserRouter>    

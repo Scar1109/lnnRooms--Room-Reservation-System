@@ -11,10 +11,10 @@ function Navbar() {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav ml-auto mb-2 mb-lg-0 ">
         <li className="nav-item">
-          <a className="nav-link" href="/" style={{color : 'white',fontSize : '13px'}}>Register</a>
+          <a className="nav-link" href="/register" style={{color : 'white',fontSize : '13px'}}>Register</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/" style={{color : 'white',fontSize : '13px'}}>Login</a>
+          <a className="nav-link" href="/login" style={{color : 'white',fontSize : '13px'}}>Login</a>
         </li>
       </ul>
     </div>
