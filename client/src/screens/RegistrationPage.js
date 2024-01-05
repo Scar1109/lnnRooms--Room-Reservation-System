@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
+import Swal from "sweetalert2";
 
 function RegistrationPage() {
     const [firstName, setFirstName] = useState("");
@@ -8,15 +11,43 @@ function RegistrationPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("");
+    const isAdmin = false;
+
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     async function register() {
         if (password === cPassword) {
             const user = { firstName, lastName, userName, email, password};
+            setLoading(true);
             
             try {
-                const results = await axios.post('api/users/register', user).data;
+                await axios.post('api/users/register', user).data;
+                setLoading(false);
+
+                const temp = {firstName, lastName, userName, email, isAdmin};
+                localStorage.setItem('currentUser', JSON.stringify(temp));
+
+                //Empty the input fields
+                setFirstName("");
+                setLastName("");
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                setCPassword("");
+
+                Swal.fire({
+                    title: "Registration Successful",
+                    text: "Press 'OK' to redirect to Home Page",
+                    icon: "success",
+                }).then(results => {
+                    window.location.href = '/home'
+                })
+
             } catch (error) {
                 console.log(error);
+                setLoading(false);
+                setError(true);
             }
         } else {
             alert("Password does not match");
@@ -25,7 +56,8 @@ function RegistrationPage() {
 
     return (
         <div className="container">
-            <div className="row justify-content-center mt-5">
+            {loading ? <Loader /> :
+            error ? <Error /> :  <div className="row justify-content-center mt-5">
                 <div className="col-md-5">
                     <h3 style={{fontWeight: 'bold'}}>Register</h3>
                     <hr/>
@@ -99,8 +131,8 @@ function RegistrationPage() {
                     </button>
                     
                 </div>
-            </div>
-        </div>
+            </div> }
+        </div> 
     );
 }
 
