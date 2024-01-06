@@ -4,11 +4,15 @@ import { Carousel } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import moment from "moment";
 
 function BookingScreen({ match }) {
     const [loading, setLoading] = useState(true);
     const [room, setRoom] = useState({});
-    let { roomId } = useParams();
+    let { roomId,fromDate,toDate } = useParams();
+
+
+    const totalDays = moment.duration((moment(toDate , "DD-MM-YYYY")).diff(moment(fromDate ,"DD-MM-YYYY"))).asDays() + 1;
 
     useEffect(() => {
         let getRes = async () => {
@@ -63,8 +67,8 @@ function BookingScreen({ match }) {
                                     Booking Details
                                 </p>
                                 <p>Customer's Name :</p>
-                                <p className="marginReducer">From Date :</p>
-                                <p className="marginReducer">To Date :</p>
+                                <p className="marginReducer">From Date : {fromDate}</p>
+                                <p className="marginReducer">To Date : {toDate}</p>
                                 <p className="marginReducer">
                                     Room Type : {room.roomType}
                                 </p>
@@ -75,10 +79,12 @@ function BookingScreen({ match }) {
                                 <p style={{ fontWeight: "bold" }}>Amount</p>
                                 <p>Type : {room.roomType}</p>
                                 <p className="marginReducer">
-                                    Price Per Day : {room.pricePerDay} LKR
+                                    Price Per Day : {room.pricePerDay}/= LKR
                                 </p>
                                 <p className="marginReducer">
-                                    Price : 00.00 LKR
+                                    Total Days : {totalDays} </p>
+                                <p className="marginReducer">
+                                    Price : {totalDays * room.pricePerDay}/= LKR
                                 </p>
                             </div>
                             <button
