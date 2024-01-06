@@ -50,7 +50,11 @@ function RegistrationPage() {
                 setError(true);
             }
         } else {
-            alert("Password does not match");
+            Swal.fire({
+                title: "Password Mismatch",
+                text: "Please enter the same password in both fields",
+                icon: "warning",
+            })
         }
     }
 
