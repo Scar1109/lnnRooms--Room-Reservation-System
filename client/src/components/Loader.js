@@ -2,13 +2,18 @@ import React from 'react'
 import { BeatLoader } from 'react-spinners';
 
 function Loader() {
-    return (
-        <div className='spinner'><BeatLoader
+    return ( <div className='loader'>
+        <span style={{
+                        fontFamily: "cursive",
+                        fontSize: "50px",
+                        color: "black",
+                    }}>InnRooms</span>
+        <div><BeatLoader
             color="#000000"
-            size={15}
+            size={25}
             speedMultiplier={0.6}
         /></div>
-    )
+        </div>)
 }
 
 export default Loader
