@@ -18,7 +18,6 @@ function LoginScreen() {
             await axios.post(
                 "api/users/login",user
             ).then((res) => {
-                console.log(res);
                 if (res.data) {
                     localStorage.setItem("currentUser", JSON.stringify(res.data));
                     window.location.href = "/home";
@@ -33,6 +32,7 @@ function LoginScreen() {
             });
         } catch (error) {
             setError(true);
+            console.log(error);
             setLoading(false);
         }
     }
