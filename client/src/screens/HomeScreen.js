@@ -3,7 +3,7 @@ import axios from "axios";
 import Room from "../components/Room";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space } from "antd";
 import moment from "moment";
 
 const { RangePicker } = DatePicker;
@@ -13,6 +13,7 @@ function HomeScreen() {
     const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState();
     const [toDate, setToDate] = useState();
+    const [filteredRooms, setFilteredRooms] = useState([]);
 
     useEffect(() => {
         let getRes = async () => {
@@ -21,6 +22,7 @@ function HomeScreen() {
                 const response = (await axios.get("api/rooms/getAllRooms"))
                     .data;
                 setRooms(response);
+                setFilteredRooms(response);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -30,29 +32,58 @@ function HomeScreen() {
     }, []);
 
     function filterByDate(dates) {
-        const dayFrom = new Date(dates[0]);
-        const dayTo = new Date(dates[1]);
-        
-        setFromDate(moment(dayFrom).format('DD-MM-YYYY'))
-        setToDate(moment(dayTo).format('DD-MM-YYYY'));
+        const startDate = moment(new Date(dates[0]), "DD-MM-YYYY");
+        const endDate = moment(new Date(dates[1]), "DD-MM-YYYY");
+
+        setFromDate(moment(startDate).format("DD-MM-YYYY"));
+        setToDate(moment(endDate).format("DD-MM-YYYY"));
+
+        var tempRooms = [];
+
+        if (dates[0] === null || dates[1] === null) {
+            setFilteredRooms(rooms);
+        } else {
+            for (const room of rooms) {
+                if (room.bookedDates.length > 0) {
+                    for (const booking of room.bookedDates) {
+                        const start = moment(booking.fromDate,"DD-MM-YYYY");
+                        const end = moment(booking.toDate, "DD-MM-YYYY");
+                        console.log(startDate, endDate, moment(endDate).isSame(start));
+                        if (!moment(startDate).isBetween(start, end) && !moment(endDate).isBetween(start, end)
+                        && !moment(start).isBetween(startDate, endDate) && !moment(end).isBetween(startDate, endDate)
+                        && !moment(startDate).isSame(start) && !moment(endDate).isSame(end)
+                        && !moment(startDate).isSame(end) && !moment(endDate).isSame(start)
+                        ) {
+                            tempRooms.push(room);
+                        }
+                    }
+                } else {
+                    tempRooms.push(room);
+                }
+            }
+            setFilteredRooms(tempRooms);
+        }
     }
 
     return (
         <div className="container">
             <div className="row mt-5">
                 <Space direction="vertical" size={12}>
-                    <RangePicker format='DD-MM-YYYY' onChange={filterByDate}/>
+                    <RangePicker format="DD-MM-YYYY" onChange={filterByDate} />
                 </Space>
             </div>
-
             <div className="row justify-content-center mt-4">
                 {loading ? (
                     <Loader />
-                ) : rooms ? (
-                    rooms.map((room) => {
+                ) : filteredRooms ? (
+                    filteredRooms.map((room) => {
                         return (
                             <div className="col-md-9 mt-2">
-                                <Room room={room} fromDate = {fromDate} toDate = {toDate} />
+                                <Room
+                                    room={room}
+                                    fromDate={fromDate}
+                                    toDate={toDate}
+                                />
                             </div>
                         );
                     })

@@ -12,13 +12,15 @@ router.post("/bookRoom", async (req, res) => {
 
         const roomTemp = await roomModel.findOne({ _id: roomId });
 
-        roomTemp.currentBookings.push({
+        roomTemp.bookedDates.push({
             _id: response._id,
-            fromDate: req.body.fromDate,
-            toDate: req.body.toDate,
+            fromDate: moment(req.body.fromDate).format("DD-MM-YYYY"),
+            toDate: moment(req.body.toDate).format("DD-MM-YYYY"),
             userId: req.body.userId,
             status: req.body.status,
         });
+
+        await roomTemp.save();
 
         res.send(response);
     } catch (error) {
