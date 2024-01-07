@@ -7,8 +7,18 @@ router.post("/register", async (req, res) => {
     const user = new userModel(req.body);
 
     try {
-        await user.save();
-        res.send("User Registered Successfully");
+        const response = await user.save();
+        if(response){
+            const temp = {
+                _id: response._id,
+                firstName: response.firstName,
+                lastName: response.lastName,
+                userName: response.userName,
+                email: response.email,
+                isAdmin: response.isAdmin,
+            }
+            res.send(temp);
+        }
     } catch (error) {
         return res.status(400).json({ message: error });
     }

@@ -9,7 +9,18 @@ import moment from "moment";
 function BookingScreen({ match }) {
     const [loading, setLoading] = useState(true);
     const [room, setRoom] = useState({});
+    const [access, setAccess] = useState(false);
     let { roomId,fromDate,toDate } = useParams();
+
+    const currentUser = (JSON.parse(localStorage.getItem("currentUser")));
+
+    useEffect(() => {
+        if (currentUser && room) {
+            setAccess(true);
+        } else {
+            window.location.href = "/login";
+        }
+    }, [currentUser,room]);
 
 
     const totalDays = moment.duration((moment(toDate , "DD-MM-YYYY")).diff(moment(fromDate ,"DD-MM-YYYY"))).asDays() + 1;
@@ -32,11 +43,25 @@ function BookingScreen({ match }) {
         getRes();
     }, [roomId]);
 
+    async function bookRoom() {
+        const bookingDetails = {
+            roomId,
+            userId: currentUser._id,
+            fromDate : moment(fromDate).format("DD-MM-YYYY"),
+            toDate : moment(toDate).format("DD-MM-YYYY"),
+            totalAmount: totalDays * room.pricePerDay,
+            totalDays,
+            transactionId: "123456",
+        }
+
+        const res = await axios.post("/api/bookings/bookRoom", bookingDetails);
+    }
+
     return (
         <div>
             {loading ? (
                 <Loader />
-            ) : room ? (
+            ) : access ? (
                 <div className="bookingContainer">
                     <div className="row">
                         <div className="col-md-6">
@@ -66,7 +91,7 @@ function BookingScreen({ match }) {
                                 <p style={{ fontWeight: "bold" }}>
                                     Booking Details
                                 </p>
-                                <p>Customer's Name :</p>
+                                <p>Customer's Name : {currentUser.firstName} {currentUser.lastName}</p>
                                 <p className="marginReducer">From Date : {fromDate}</p>
                                 <p className="marginReducer">To Date : {toDate}</p>
                                 <p className="marginReducer">
@@ -97,6 +122,7 @@ function BookingScreen({ match }) {
                                     marginRight: "-100px",
                                     marginTop: "20px",
                                 }}
+                                onClick={bookRoom}
                             >
                                 Pay Now
                             </button>

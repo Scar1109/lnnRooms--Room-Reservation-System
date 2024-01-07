@@ -11,7 +11,6 @@ function RegistrationPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("");
-    const isAdmin = false;
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -22,11 +21,12 @@ function RegistrationPage() {
             setLoading(true);
             
             try {
-                await axios.post('api/users/register', user).data;
+                await axios.post('api/users/register', user).then((res) => {
+                    if (res.data) {
+                        localStorage.setItem("currentUser", JSON.stringify(res.data));
+                    }
+                });
                 setLoading(false);
-
-                const temp = {firstName, lastName, userName, email, isAdmin};
-                localStorage.setItem('currentUser', JSON.stringify(temp));
 
                 //Empty the input fields
                 setFirstName("");
