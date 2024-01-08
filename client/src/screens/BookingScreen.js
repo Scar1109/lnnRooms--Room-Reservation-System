@@ -6,11 +6,13 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
+import Swal from "sweetalert2";
 
 function BookingScreen() {
     const [loading, setLoading] = useState(true);
     const [room, setRoom] = useState({});
     const [access, setAccess] = useState(false);
+    const [error, setError] = useState(false);
     let { roomId, fromDate, toDate } = useParams();
 
     const start = moment(fromDate,"DD-MM-YYYY");
@@ -48,6 +50,7 @@ function BookingScreen() {
                 setLoading(false);
             } catch (error) {
                 console.log(error);
+                setError(true);
             }
         };
         getRes();
@@ -68,9 +71,17 @@ function BookingScreen() {
 
         await axios.post("/api/bookings/bookRoom", bookingDetails).then(
             (response) => {
+                Swal.fire({
+                    title: "Your booking is successful",
+                    text: "Please check your email for more details",
+                    icon: "success",
+                }).then(() => {
+                    window.location.href = "/profile";
+                });
                 
             },
             (error) => {
+                setError(true);
                 console.log(error);
             }
         );
@@ -87,6 +98,7 @@ function BookingScreen() {
                 bookRoom(response.data);
             }, (error) => {
                 console.log(error);
+                setError(true);
             });
     }
 
@@ -94,7 +106,7 @@ function BookingScreen() {
         <div>
             {loading ? (
                 <Loader />
-            ) : access ? (
+            ) : access && !error ? (
                 <div className="bookingContainer">
                     <div className="row">
                         <div className="col-md-6">
