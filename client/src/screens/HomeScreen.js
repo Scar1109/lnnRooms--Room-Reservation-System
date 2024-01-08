@@ -14,6 +14,7 @@ function HomeScreen() {
     const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState();
     const [toDate, setToDate] = useState();
+    const [dateFilteredRooms, setDateFilteredRooms] = useState([]);
     const [filteredRooms, setFilteredRooms] = useState([]);
     const [selectedType, setSelectedType] = useState("all");
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -26,6 +27,7 @@ function HomeScreen() {
                     .data;
                 setRooms(response);
                 setFilteredRooms(response);
+                setDateFilteredRooms(response);
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -64,6 +66,7 @@ function HomeScreen() {
                     tempRooms.push(room);
                 }
             }
+            setDateFilteredRooms(tempRooms);
             setFilteredRooms(tempRooms);
         }
     }
@@ -72,9 +75,9 @@ function HomeScreen() {
         setSearchKeyword(keyword);
 
         if(keyword === "") {
-            setFilteredRooms(rooms);
+            setFilteredRooms(dateFilteredRooms);
         } else {
-            const temp = rooms.filter(room => room.name.toLowerCase().includes(keyword.toLowerCase()));
+            const temp = dateFilteredRooms.filter(room => room.name.toLowerCase().includes(keyword.toLowerCase()));
             setFilteredRooms(temp);
         }
     }
@@ -83,9 +86,9 @@ function HomeScreen() {
         setSelectedType(type);
 
         if(type === "all"){
-            setFilteredRooms(rooms);
+            setFilteredRooms(dateFilteredRooms);
         }else{
-            const temp = rooms.filter(room => (room.roomType.toLowerCase()) === (type.toLowerCase()));
+            const temp = dateFilteredRooms.filter(room => (room.roomType.toLowerCase()) === (type.toLowerCase()));
             setFilteredRooms(temp);
         }
     }
