@@ -5,14 +5,18 @@ import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
+import StripeCheckout from "react-stripe-checkout";
 
-function BookingScreen({ match }) {
+function BookingScreen() {
     const [loading, setLoading] = useState(true);
     const [room, setRoom] = useState({});
     const [access, setAccess] = useState(false);
-    let { roomId,fromDate,toDate } = useParams();
+    let { roomId, fromDate, toDate } = useParams();
 
-    const currentUser = (JSON.parse(localStorage.getItem("currentUser")));
+    const start = moment(fromDate,"DD-MM-YYYY");
+    const end = moment(toDate, "DD-MM-YYYY");
+
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
     useEffect(() => {
         if (currentUser && room) {
@@ -20,10 +24,16 @@ function BookingScreen({ match }) {
         } else {
             window.location.href = "/login";
         }
-    }, [currentUser,room]);
+    }, [currentUser, room]);
 
-
-    const totalDays = moment.duration((moment(toDate , "DD-MM-YYYY")).diff(moment(fromDate ,"DD-MM-YYYY"))).asDays() + 1;
+    const totalDays =
+        moment
+            .duration(
+                moment(toDate, "DD-MM-YYYY").diff(
+                    moment(fromDate, "DD-MM-YYYY")
+                )
+            )
+            .asDays() + 1;
 
     useEffect(() => {
         let getRes = async () => {
@@ -43,18 +53,41 @@ function BookingScreen({ match }) {
         getRes();
     }, [roomId]);
 
-    async function bookRoom() {
+    async function bookRoom(transaction) {
         const bookingDetails = {
             roomId,
             userId: currentUser._id,
-            fromDate : moment(fromDate).format("DD-MM-YYYY"),
-            toDate : moment(toDate).format("DD-MM-YYYY"),
+            fromDate: moment(start).format("DD-MM-YYYY"),
+            toDate: moment(end).format("DD-MM-YYYY"),
             totalAmount: totalDays * room.pricePerDay,
             totalDays,
-            transactionId: "123456",
-        }
+            transactionId: transaction.id,
+        };
 
-        const res = await axios.post("/api/bookings/bookRoom", bookingDetails);
+        console.log(bookingDetails);
+
+        await axios.post("/api/bookings/bookRoom", bookingDetails).then(
+            (response) => {
+                
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    async function onToken(token) {
+        const stripeToken = {
+            token,
+            amount: totalDays * room.pricePerDay,
+            description: room.name,
+        }
+        await axios.post("/api/bookings/payment", stripeToken).then(
+            (response) => {
+                bookRoom(response.data);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -91,9 +124,16 @@ function BookingScreen({ match }) {
                                 <p style={{ fontWeight: "bold" }}>
                                     Booking Details
                                 </p>
-                                <p>Customer's Name : {currentUser.firstName} {currentUser.lastName}</p>
-                                <p className="marginReducer">From Date : {fromDate}</p>
-                                <p className="marginReducer">To Date : {toDate}</p>
+                                <p>
+                                    Customer's Name : {currentUser.firstName}{" "}
+                                    {currentUser.lastName}
+                                </p>
+                                <p className="marginReducer">
+                                    From Date : {fromDate}
+                                </p>
+                                <p className="marginReducer">
+                                    To Date : {toDate}
+                                </p>
                                 <p className="marginReducer">
                                     Room Type : {room.roomType}
                                 </p>
@@ -107,11 +147,20 @@ function BookingScreen({ match }) {
                                     Price Per Day : {room.pricePerDay}/= LKR
                                 </p>
                                 <p className="marginReducer">
-                                    Total Days : {totalDays} </p>
+                                    Total Days : {totalDays}{" "}
+                                </p>
                                 <p className="marginReducer">
                                     Price : {totalDays * room.pricePerDay}/= LKR
                                 </p>
                             </div>
+                            
+
+                            <StripeCheckout
+                                amount={totalDays * room.pricePerDay * 100}
+                                currency="LKR"
+                                token={onToken}
+                                stripeKey="pk_test_51OW27PIgh0lMKMevGMnDm4suVchcjJqo78U5Zw86wYtbRbg1af16R1JXdYsKhzYhnFnyycKuoLyE3RtbmTR9sYPe00cNsii5yG"
+                            >
                             <button
                                 className="btn btn-primary"
                                 style={{
@@ -122,10 +171,10 @@ function BookingScreen({ match }) {
                                     marginRight: "-100px",
                                     marginTop: "20px",
                                 }}
-                                onClick={bookRoom}
                             >
                                 Pay Now
                             </button>
+                            </StripeCheckout>
                         </div>
                     </div>
                 </div>

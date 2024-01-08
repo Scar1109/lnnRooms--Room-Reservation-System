@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bookingModel = require("../models/booking");
 const roomModel = require("../models/room");
+const stripe = require("stripe")('sk_test_51OW27PIgh0lMKMev7W5AKWg0yxeEIJvuLskk7V2IeVmy2bVOAbqkfTPxoldaGvHAOWnG8Zm3EScp317BFBRUYUpR00T3U7Hmap');
+const { v4: uuidv4 } = require('uuid');
 
 router.post("/bookRoom", async (req, res) => {
     const booking = new bookingModel(req.body);
@@ -10,20 +12,48 @@ router.post("/bookRoom", async (req, res) => {
         const response = await booking.save();
         const roomId = req.body.roomId;
 
-        const roomTemp = await roomModel.findOne({ _id: roomId });
+        const roomTemp = await roomModel.findOne({_id : roomId})
 
         roomTemp.bookedDates.push({
             _id: response._id,
-            fromDate: moment(req.body.fromDate).format("DD-MM-YYYY"),
-            toDate: moment(req.body.toDate).format("DD-MM-YYYY"),
+            fromDate: req.body.fromDate,
+            toDate: req.body.toDate,
             userId: req.body.userId,
-            status: req.body.status,
+            isBooked: response.isBooked
         });
 
-        await roomTemp.save();
-
-        res.send(response);
+        const room = await roomTemp.save();
+        res.send(roomTemp);
     } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
+router.post("/payment", async (req, res) => {
+    const token = req.body.token;
+    const amount = req.body.amount;
+    const description = req.body.description;
+    const idempotencyKey = uuidv4();
+
+    try{
+        const customer = await stripe.customers.create({
+            email: token.email,
+            source: token.id,
+        })
+
+        const payment = await stripe.charges.create({
+            amount: amount * 100,
+            currency: 'LKR',
+            customer: customer.id,
+            receipt_email: token.email,
+            description: `Purchased the ${description}`
+        }, {
+            idempotencyKey: idempotencyKey
+        })
+
+        res.send(payment);
+
+    }catch(error){
         return res.status(400).json({ message: error });
     }
 });
