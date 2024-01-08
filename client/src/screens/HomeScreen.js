@@ -122,13 +122,13 @@ function HomeScreen() {
                     </Radio.Group>
                 </div>
             </div>
-            <div className="row justify-content-center mt-4">
+            <div className="row justify-content-center my-4">
                 {loading ? (
                     <Loader />
                 ) : filteredRooms ? (
                     filteredRooms.map((room) => {
                         return (
-                            <div className="col-md-9 mt-2">
+                            <div className="col-md-9 mb-2">
                                 <Room
                                     room={room}
                                     fromDate={fromDate}
@@ -141,7 +141,10 @@ function HomeScreen() {
                     <Error />
                 )}
             </div>
+            
         </div>
+        
+
     );
 }
 

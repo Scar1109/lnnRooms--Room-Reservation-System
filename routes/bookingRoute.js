@@ -58,4 +58,13 @@ router.post("/payment", async (req, res) => {
     }
 });
 
+router.post("/getBookingsByUserId", async (req, res) => {
+    const userId = req.body.userId;
+    try {
+        const bookings = await bookingModel.find({ userId: userId });
+        res.send(bookings);
+    }catch(error){
+        return res.status(400).json({ message: error });
+    }
+});
 module.exports = router;
