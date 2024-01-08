@@ -17,7 +17,6 @@ function HomeScreen() {
     const [dateFilteredRooms, setDateFilteredRooms] = useState([]);
     const [filteredRooms, setFilteredRooms] = useState([]);
     const [selectedType, setSelectedType] = useState("all");
-    const [searchKeyword, setSearchKeyword] = useState("");
 
     useEffect(() => {
         let getRes = async () => {
@@ -72,7 +71,6 @@ function HomeScreen() {
     }
 
     function filterBySearch(keyword) {
-        setSearchKeyword(keyword);
 
         if(keyword === "") {
             setFilteredRooms(dateFilteredRooms);
