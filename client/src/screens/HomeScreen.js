@@ -3,10 +3,11 @@ import axios from "axios";
 import Room from "../components/Room";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import { DatePicker, Space } from "antd";
+import { DatePicker, Space, Input, Radio } from "antd";
 import moment from "moment";
 
 const { RangePicker } = DatePicker;
+const { Search } = Input;
 
 function HomeScreen() {
     const [rooms, setRooms] = useState([]);
@@ -14,6 +15,8 @@ function HomeScreen() {
     const [fromDate, setFromDate] = useState();
     const [toDate, setToDate] = useState();
     const [filteredRooms, setFilteredRooms] = useState([]);
+    const [selectedType, setSelectedType] = useState("all");
+    const [searchKeyword, setSearchKeyword] = useState("");
 
     useEffect(() => {
         let getRes = async () => {
@@ -65,12 +68,58 @@ function HomeScreen() {
         }
     }
 
+    function filterBySearch(keyword) {
+        setSearchKeyword(keyword);
+
+        if(keyword === "") {
+            setFilteredRooms(rooms);
+        } else {
+            const temp = rooms.filter(room => room.name.toLowerCase().includes(keyword.toLowerCase()));
+            setFilteredRooms(temp);
+        }
+    }
+
+    function filterByType(type) {
+        setSelectedType(type);
+
+        if(type === "all"){
+            setFilteredRooms(rooms);
+        }else{
+            const temp = rooms.filter(room => (room.roomType.toLowerCase()) === (type.toLowerCase()));
+            setFilteredRooms(temp);
+        }
+    }
+
     return (
         <div className="container">
-            <div className="row mt-5">
-                <Space direction="vertical" size={12}>
-                    <RangePicker format="DD-MM-YYYY" onChange={filterByDate} />
-                </Space>
+            <div className="row mt-5 justify-content-md-center">
+                <div className="col-md-3 mt-2">
+                    <Space direction="vertical" size={12}>
+                        <RangePicker
+                            format="DD-MM-YYYY"
+                            onChange={filterByDate}
+                        />
+                    </Space>
+                </div>
+                <div className="col-md-3 mt-2">
+                    <Space direction="vertical" size={12} >
+                        <Search
+                            placeholder="input search text"
+                            allowClear
+                            onSearch={(value) =>filterBySearch(value)}
+                            style={{
+                                width: 290,
+                            }}
+                        />
+                    </Space>
+                </div>
+                <div className="col-md-3 mt-2">
+                    <Radio.Group onChange={(e) => filterByType(e.target.value)} defaultValue={selectedType}>
+                        <Radio.Button value="all">All</Radio.Button>
+                        <Radio.Button value="deluxe">Deluxe</Radio.Button>
+                        <Radio.Button value="non-deluxe">Non-Deluxe</Radio.Button>
+                    </Radio.Group>
+                </div>
             </div>
             <div className="row justify-content-center mt-4">
                 {loading ? (
