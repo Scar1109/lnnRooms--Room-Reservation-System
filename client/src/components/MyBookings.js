@@ -4,6 +4,7 @@ import Loader from "./Loader";
 import Error from "./Error";
 import { Tag } from "antd";
 import Swal from "sweetalert2";
+import { Radio } from "antd";
 
 function MyBookings() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -11,6 +12,8 @@ function MyBookings() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [selectedType, setSelectedType] = useState("all");
+    const [filteredBookings, setFilteredBookings] = useState([]);
 
     useEffect(() => {
         async function getBookings() {
@@ -21,6 +24,7 @@ function MyBookings() {
                     { userId: user._id }
                 );
                 setBookings(bookings.data);
+                setFilteredBookings(bookings.data);
                 setLoading(false);
             } catch (error) {
                 setError(true);
@@ -50,16 +54,37 @@ function MyBookings() {
         }
     }
 
+    function filterByType(type) {
+        setSelectedType(type);
+        if(type === "all"){
+            setFilteredBookings(bookings);
+        }
+        else if(type === "active"){
+            setFilteredBookings(bookings.filter(booking => booking.isBooked === true));
+        }
+        else if(type === "canceled"){
+            setFilteredBookings(bookings.filter(booking => booking.isBooked === false));
+        }
+        
+    }
+
     return (
         <div className="text-start">
             <h2>My Bookings</h2>
+            <div className="mt-4">
+                    <Radio.Group onChange={(e) => filterByType(e.target.value)} defaultValue={selectedType}>
+                        <Radio.Button value="all">All</Radio.Button>
+                        <Radio.Button value="active">Active</Radio.Button>
+                        <Radio.Button value="canceled">Canceled</Radio.Button>
+                    </Radio.Group>
+            </div>
             <div className="row">
                 {loading ? (
                     <Loader />
                 ) : error ? (
                     <Error />
-                ) : bookings ? (
-                    bookings.map((booking) => {
+                ) : filteredBookings ? (
+                    filteredBookings.map((booking) => {
                         return (
                             <div className="col-md-8 bookingContainer d-flex flex-column">
                                 <h4>{booking.roomName}</h4>
