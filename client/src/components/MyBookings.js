@@ -43,9 +43,7 @@ function MyBookings() {
                     title: "Cancelation Successful",
                     text: "Press 'OK' to redirect",
                     icon: "success",
-                }).then(results => {
-                    
-                })
+                }).then((results) => {});
             }
         } catch (error) {
             console.log(error);
@@ -79,17 +77,21 @@ function MyBookings() {
                                     )}
                                 </p>
                                 <div className="d-flex justify-content-end">
-                                    <button
-                                        className="btn btn-primary"
-                                        style={{
-                                            backgroundColor: "#323232",
-                                            boxShadow: "none",
-                                            borderColor: "#323232",
-                                        }}
-                                        onClick={() => cancelBooking(booking)}
-                                    >
-                                        Cancel Booking
-                                    </button>
+                                    {booking.isBooked && (
+                                        <button
+                                            className="btn btn-primary"
+                                            style={{
+                                                backgroundColor: "#323232",
+                                                boxShadow: "none",
+                                                borderColor: "#323232",
+                                            }}
+                                            onClick={() =>
+                                                cancelBooking(booking)
+                                            }
+                                        >
+                                            Cancel Booking
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         );

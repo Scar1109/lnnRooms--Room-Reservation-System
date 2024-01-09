@@ -18,11 +18,11 @@ function ProfileScreen() {
         <div>
             <div className="container mt-3">
                 <Tabs defaultActiveKey="1">
-                    <TabPane tab="Profile" key="1">
-                        <Profile />
-                    </TabPane>
-                    <TabPane tab="Bookings" key="2">
+                    <TabPane tab="Bookings" key="1">
                         <MyBookings />
+                    </TabPane>
+                    <TabPane tab="Profile" key="2">
+                        <Profile />
                     </TabPane>
                 </Tabs>
             </div>

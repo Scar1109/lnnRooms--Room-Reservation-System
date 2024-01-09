@@ -110,7 +110,7 @@ function BookingScreen() {
             ) : access && !error ? (
                 <div className="bookingContainer">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6" style={{width : "700px"}}>
                             <Carousel>
                                 {room.imgURL.map((img) => {
                                     return (
