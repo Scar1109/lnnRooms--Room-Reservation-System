@@ -60,6 +60,7 @@ function BookingScreen() {
         const bookingDetails = {
             roomId,
             userId: currentUser._id,
+            roomName: room.name,
             fromDate: moment(start).format("DD-MM-YYYY"),
             toDate: moment(end).format("DD-MM-YYYY"),
             totalAmount: totalDays * room.pricePerDay,

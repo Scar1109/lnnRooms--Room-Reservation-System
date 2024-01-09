@@ -3,11 +3,10 @@ import { Tag } from "antd";
 
 function Profile() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    console.log(user);
     return (
         <div className="text-start">
             <h2 className="mt-1 ">My Profile</h2>
-            <div style={{ fontSize: "1.2rem" }} className="mt-3">
+            <div style={{ fontSize: "1.1rem" }} className="mt-3">
                 <p>First Name : {user.firstName}</p>
                 <p>Last Name : {user.lastName}</p>
                 <p>Email : {user.email}</p>

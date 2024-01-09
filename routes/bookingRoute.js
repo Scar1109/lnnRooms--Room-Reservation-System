@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const bookingModel = require("../models/booking");
 const roomModel = require("../models/room");
-const stripe = require("stripe")('sk_test_51OW27PIgh0lMKMev7W5AKWg0yxeEIJvuLskk7V2IeVmy2bVOAbqkfTPxoldaGvHAOWnG8Zm3EScp317BFBRUYUpR00T3U7Hmap');
-const { v4: uuidv4 } = require('uuid');
+const stripe = require("stripe")(
+    "sk_test_51OW27PIgh0lMKMev7W5AKWg0yxeEIJvuLskk7V2IeVmy2bVOAbqkfTPxoldaGvHAOWnG8Zm3EScp317BFBRUYUpR00T3U7Hmap"
+);
+const { v4: uuidv4 } = require("uuid");
 
 router.post("/bookRoom", async (req, res) => {
     const booking = new bookingModel(req.body);
@@ -12,14 +14,14 @@ router.post("/bookRoom", async (req, res) => {
         const response = await booking.save();
         const roomId = req.body.roomId;
 
-        const roomTemp = await roomModel.findOne({_id : roomId})
+        const roomTemp = await roomModel.findOne({ _id: roomId });
 
         roomTemp.bookedDates.push({
             _id: response._id,
             fromDate: req.body.fromDate,
             toDate: req.body.toDate,
             userId: req.body.userId,
-            isBooked: response.isBooked
+            isBooked: response.isBooked,
         });
 
         const room = await roomTemp.save();
@@ -35,25 +37,27 @@ router.post("/payment", async (req, res) => {
     const description = req.body.description;
     const idempotencyKey = uuidv4();
 
-    try{
+    try {
         const customer = await stripe.customers.create({
             email: token.email,
             source: token.id,
-        })
+        });
 
-        const payment = await stripe.charges.create({
-            amount: amount * 100,
-            currency: 'LKR',
-            customer: customer.id,
-            receipt_email: token.email,
-            description: `Purchased the ${description}`
-        }, {
-            idempotencyKey: idempotencyKey
-        })
+        const payment = await stripe.charges.create(
+            {
+                amount: amount * 100,
+                currency: "LKR",
+                customer: customer.id,
+                receipt_email: token.email,
+                description: `Purchased the ${description}`,
+            },
+            {
+                idempotencyKey: idempotencyKey,
+            }
+        );
 
         res.send(payment);
-
-    }catch(error){
+    } catch (error) {
         return res.status(400).json({ message: error });
     }
 });
@@ -63,8 +67,32 @@ router.post("/getBookingsByUserId", async (req, res) => {
     try {
         const bookings = await bookingModel.find({ userId: userId });
         res.send(bookings);
-    }catch(error){
+    } catch (error) {
         return res.status(400).json({ message: error });
     }
 });
+
+router.post("/cancelBooking", async (req, res) => {
+    const bookingId = req.body.bookingId;
+    const roomId = req.body.roomId;
+
+    try {
+        const booking = await bookingModel.findOne({ _id: bookingId });
+        booking.isBooked = false;
+        const response = await booking.save();
+
+        const tempRoom = await roomModel.findOne({ _id: roomId });
+        const tempBookedDates = tempRoom.bookedDates.filter(
+            (booking) => booking._id != bookingId
+        );
+
+        tempRoom.bookedDates = tempBookedDates;
+        const room = await tempRoom.save();
+
+        res.send(room);
+    } catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 module.exports = router;
