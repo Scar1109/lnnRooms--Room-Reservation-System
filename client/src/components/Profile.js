@@ -1,5 +1,6 @@
 import React from "react";
 import { Tag } from "antd";
+import Link from "antd/es/typography/Link";
 
 function Profile() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -19,6 +20,7 @@ function Profile() {
                     )}
                 </p>
                 {user.isAdmin && (
+                    <Link href="/admin">
                     <button
                         className="btn btn-primary"
                         style={{
@@ -29,6 +31,7 @@ function Profile() {
                     >
                         Admin Dashboard
                     </button>
+                    </Link>
                 )}
             </div>
         </div>

@@ -23,4 +23,18 @@ router.post('/getRoomById',async (req,res)=>{
     }
 });
 
+router.get('/deleteRoom/:id',async (req,res)=>{
+
+    const roomId = req.params.id;
+    console.log(roomId);
+
+    try{
+        const room = await roomModel.findByIdAndDelete(req.params.id);
+        res.send('room deleted');
+    }catch(error){
+        return res.status(400).json({message: error});
+    }
+
+});
+
 module.exports = router;

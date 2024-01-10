@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Tabs } from "antd";
 import axios from "axios";
 import { Tag } from "antd";
+import AdminRooms from "../components/AdminRooms";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
@@ -24,7 +25,7 @@ function AdminScreen() {
             <div className="container mt-3">
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="Rooms" key="1">
-                        Rooms
+                        <AdminRooms />
                     </TabPane>
                     <TabPane tab="Add Room" key="2">
                         Payments
@@ -85,10 +86,10 @@ export function Bookings() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bookings.map((booking) => {
+                        {bookings.map((booking, index) => {
                             return (
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">{index + 1}</th>
                                     <td>{booking.roomName}</td>
                                     <td>{booking.fromDate}</td>
                                     <td>{booking.toDate}</td>
@@ -150,10 +151,10 @@ export function Users() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => {
+                        {users.map((user, index) => {
                             return (
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <th scope="row">{index + 1}</th>
                                     <td>{user.firstName}</td>
                                     <td>{user.lastName}</td>
                                     <td>{user.userName}</td>
