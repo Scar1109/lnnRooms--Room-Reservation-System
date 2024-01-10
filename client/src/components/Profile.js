@@ -18,26 +18,18 @@ function Profile() {
                         <Tag color="green">USER</Tag>
                     )}
                 </p>
-                <button
-                    className="btn btn-primary m-3"
-                    style={{
-                        backgroundColor: "#323232",
-                        boxShadow: "none",
-                        borderColor: "#323232",
-                    }}
-                >
-                    Edit Details
-                </button>
-                <button
-                    className="btn btn-primary m-3"
-                    style={{
-                        backgroundColor: "#323232",
-                        boxShadow: "none",
-                        borderColor: "#323232",
-                    }}
-                >
-                    Change Password
-                </button>
+                {user.isAdmin && (
+                    <button
+                        className="btn btn-primary"
+                        style={{
+                            backgroundColor: "#323232",
+                            boxShadow: "none",
+                            borderColor: "#323232",
+                        }}
+                    >
+                        Admin Dashboard
+                    </button>
+                )}
             </div>
         </div>
     );
