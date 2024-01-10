@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "./Loader";
 import Error from "./Error";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function AdminRooms() {
     const [rooms, setRooms] = useState([]);
@@ -29,7 +30,13 @@ function AdminRooms() {
             setLoading(true);
             axios.get(`/api/rooms/deleteRoom/${roomId}`);
             setLoading(false);
-            window.location.reload();
+            Swal.fire({
+                title: "Room Deleted Successfully",
+                text: "Press 'OK' to redirect",
+                icon: "success",
+            }).then(results => {
+                window.location.reload();
+            })
 
         }catch(error){
             setError(true);
