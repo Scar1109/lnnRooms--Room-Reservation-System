@@ -52,4 +52,13 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.get("/getAllUsers", async (req, res) => {
+    try {
+        const response = await userModel.find();
+        res.send(response);
+    }catch (error) {
+        return res.status(400).json({ message: error });
+    }
+});
+
 module.exports = router;
