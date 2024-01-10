@@ -37,4 +37,15 @@ router.get('/deleteRoom/:id',async (req,res)=>{
 
 });
 
+router.post('/addRoom',async (req,res)=>{
+    const room = req.body;
+    try{
+        const newRoom = new roomModel(room);
+        const response = await newRoom.save();
+        res.send(response);
+    }catch(error){
+        return res.status(400).json({message: error});
+    }
+});
+
 module.exports = router;

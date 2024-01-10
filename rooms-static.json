@@ -7,7 +7,7 @@
             "https://images.oyoroomscdn.com/uploads/hotel_image/56303/medium/91dead74a5dffa61.jpg"
         ],
         "pricePerDay": 1500,
-        "roomType": "Delux",
+        "roomType": "deluxe",
         "maxCount": 3,
         "phoneNo": 9989649278,
         "bookedDates": [],
@@ -21,7 +21,7 @@
             "https://images.oyoroomscdn.com/uploads/hotel_image/105649/large/46bffe91d06dcb96.jpg"
         ],
         "pricePerDay": 1500,
-        "roomType": "Delux",
+        "roomType": "deluxe",
         "maxCount": 3,
         "phoneNo": 9989649278,
         "bookedDates": [],
@@ -35,7 +35,7 @@
             "https://images.oyoroomscdn.com/uploads/hotel_image/111796/large/2f7029d3c5429b5f.jpg"
         ],
         "pricePerDay": 1600,
-        "roomType": "Non-Delux",
+        "roomType": "non-deluxe",
         "maxCount": 4,
         "phoneNo": 9989649278,
         "bookedDates": [],
@@ -49,7 +49,7 @@
             "https://images.oyoroomscdn.com/uploads/hotel_image/38668/large/58025558878fa4ec.jpg"
         ],
         "pricePerDay": 1800,
-        "roomType": "Non-Delux",
+        "roomType": "non-deluxe",
         "maxCount": 3,
         "phoneNo": 9989649278,
         "bookedDates": [],
@@ -63,7 +63,7 @@
             "https://images.oyoroomscdn.com/uploads/hotel_image/107625/large/8f690e54761344e0.jpg"
         ],
         "pricePerDay": 2000,
-        "roomType": "Non-Delux",
+        "roomType": "non-deluxe",
         "maxCount": 3,
         "phoneNo": 9989649278,
         "bookedDates": [],

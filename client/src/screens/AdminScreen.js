@@ -6,6 +6,7 @@ import AdminRooms from "../components/AdminRooms";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
+import AddRooms from "../components/AddRooms";
 
 const { TabPane } = Tabs;
 
@@ -28,7 +29,7 @@ function AdminScreen() {
                         <AdminRooms />
                     </TabPane>
                     <TabPane tab="Add Room" key="2">
-                        Payments
+                        <AddRooms />
                     </TabPane>
                     <TabPane tab="Bookings" key="3">
                         <Bookings />
