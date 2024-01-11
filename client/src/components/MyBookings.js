@@ -71,14 +71,14 @@ function MyBookings() {
     return (
         <div className="text-start">
             <h2>My Bookings</h2>
-            <div className="mt-4">
+            <div className="mt-4 mx-2">
                     <Radio.Group onChange={(e) => filterByType(e.target.value)} defaultValue={selectedType}>
                         <Radio.Button value="all">All</Radio.Button>
                         <Radio.Button value="active">Active</Radio.Button>
                         <Radio.Button value="canceled">Canceled</Radio.Button>
                     </Radio.Group>
             </div>
-            <div className="row">
+            <div>
                 {loading ? (
                     <Loader />
                 ) : error ? (

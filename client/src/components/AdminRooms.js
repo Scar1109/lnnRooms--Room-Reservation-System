@@ -52,6 +52,7 @@ function AdminRooms() {
             ) : error ? (
                 <Error />
             ) : (
+                <div class="table-responsive">
                 <table class="table table-striped text-start">
                     <thead class="thead">
                         <tr>
@@ -86,6 +87,7 @@ function AdminRooms() {
                         })}
                     </tbody>
                 </table>
+                </div>
             )}
         </div>
     );

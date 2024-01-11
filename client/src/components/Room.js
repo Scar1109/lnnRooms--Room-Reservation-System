@@ -13,7 +13,7 @@ function Room({ room, fromDate, toDate }) {
             <div className="col-md-4">
                 <img src={room.imgURL[0]} className="smallImg" alt=""></img>
             </div>
-            <div className="col-md-7 text-start">
+            <div className="col-md-7 text-start mt-2">
                 <h4>{room.name}</h4>
                 <p>Max Count :{room.maxCount}</p>
                 <p>Phone no :{room.phoneNo}</p>
@@ -35,12 +35,12 @@ function Room({ room, fromDate, toDate }) {
                         </Link>
                     )}
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-primary viewDetailsBtn"
                         style={{
                             backgroundColor: "#323232",
                             boxShadow: "none",
                             borderColor: "#323232",
-                            marginRight: "-65px",
+                            
                         }}
                         onClick={handleShow}
                     >

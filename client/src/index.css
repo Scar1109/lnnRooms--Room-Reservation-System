@@ -38,7 +38,8 @@ code {
 }
 
 .bShadow:hover {
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+        rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .landing {
@@ -94,10 +95,8 @@ code {
     border-radius: 11px;
 }
 
-
-.errorComp{
+.errorComp {
     margin: 30px 10% 0px 10%;
-    
 }
 
 .inputs {
@@ -109,23 +108,65 @@ code {
     margin-top: 230px;
 }
 
-.bookingContainer{
+.bookingContainer {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 11px;
-    padding: 20px;
 }
 
-.bookingContainer:hover{
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+.bookingContainer:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+        rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 .material-symbols-outlined {
     font-size: 22px;
     color: #212121;
-    
 }
 
 .material-symbols-outlined:hover {
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     cursor: pointer;
+}
+
+.bookNowBtn {
+    margin-top: 20px;
+}
+
+.LandingText {
+    color: "white";
+    font-size: 120px;
+    font-weight: normal;
+    font-family: "cursive";
+    letter-spacing: 10px;
+}
+
+.viewDetailsBtn {
+    margin-right: -60px;
+}
+
+.profileContainer {
+    margin: 20px 70px;
+}
+
+@media only screen and (max-width: 600px) {
+    .LandingText {
+        font-size: 60px !important;
+    }
+
+    .roomContainer {
+        margin: 0px 20px !important;
+    }
+
+    .viewDetailsBtn {
+        margin-right: 10px !important;
+    }
+
+    .profileContainer {
+        margin: 20px 5px !important;
+    }
+
+    #ControlSelect {
+        margin-bottom: 20px !important;
+    }
 }

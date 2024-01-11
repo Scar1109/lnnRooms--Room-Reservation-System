@@ -74,6 +74,7 @@ export function Bookings() {
             ) : error ? (
                 <Error />
             ) : (
+                <div class="table-responsive">
                 <table class="table table-striped text-start">
                     <thead class="thead">
                         <tr>
@@ -108,6 +109,7 @@ export function Bookings() {
                         })}
                     </tbody>
                 </table>
+                </div>
             )}
         </div>
     );
@@ -139,6 +141,7 @@ export function Users() {
             ) : error ? (
                 <Error />
             ) : (
+                <div class="table-responsive">
                 <table class="table table-striped text-start">
                     <thead class="thead">
                         <tr>
@@ -177,6 +180,7 @@ export function Users() {
                         })}
                     </tbody>
                 </table>
+                </div>
             )}
         </div>
     );

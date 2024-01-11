@@ -5,7 +5,7 @@ import Link from "antd/es/typography/Link";
 function Profile() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     return (
-        <div className="text-start">
+        <div className="text-start mx-4">
             <h2 className="mt-1 ">My Profile</h2>
             <div style={{ fontSize: "1.1rem" }} className="mt-3">
                 <p>First Name : {user.firstName}</p>

@@ -122,7 +122,7 @@ function HomeScreen() {
                     </Radio.Group>
                 </div>
             </div>
-            <div className="row justify-content-center my-4">
+            <div className="row justify-content-center my-4 roomContainer">
                 {loading ? (
                     <Loader />
                 ) : filteredRooms ? (

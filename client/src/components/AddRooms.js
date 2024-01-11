@@ -100,7 +100,7 @@ function AddRooms() {
 
                         <div className="row">
                             <div className="col-md-4">
-                                <div class="input-group mb-2">
+                                <div class="input-group mb-3">
                                     <input
                                         type="number"
                                         class="form-control"
@@ -134,7 +134,7 @@ function AddRooms() {
                             <div className="col-md-4">
                                 <select
                                     class="form-select"
-                                    id="exampleFormControlSelect1"
+                                    id="ControlSelect"
                                     style={{ height: "45px" }}
                                     onChange={(e) => {
                                         setRoomType(e.target.value);

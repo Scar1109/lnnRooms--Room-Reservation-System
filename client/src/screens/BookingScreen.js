@@ -110,8 +110,8 @@ function BookingScreen() {
             ) : access && !error ? (
                 <div className="bookingContainer">
                     <div className="row">
-                        <div className="col-md" style={{width : "700px"}}>
-                            <Carousel>
+                        <div className="col-md-6">
+                            <Carousel style={{width : "100%"}}>
                                 {room.imgURL.map((img) => {
                                     return (
                                         <Carousel.Item>
@@ -125,7 +125,7 @@ function BookingScreen() {
                                 })}
                             </Carousel>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-6">
                             <h4>{room.name}</h4>
                             <div
                                 style={{
@@ -175,13 +175,12 @@ function BookingScreen() {
                                 stripeKey="pk_test_51OW27PIgh0lMKMevGMnDm4suVchcjJqo78U5Zw86wYtbRbg1af16R1JXdYsKhzYhnFnyycKuoLyE3RtbmTR9sYPe00cNsii5yG"
                             >
                             <button
-                                className="btn btn-primary"
+                                className="btn btn-primary bookNowBtn"
                                 style={{
                                     backgroundColor: "#323232",
                                     boxShadow: "none",
                                     borderColor: "#323232",
                                     float: "right",
-                                    marginRight: "-100px",
                                     marginTop: "20px",
                                 }}
                             >
