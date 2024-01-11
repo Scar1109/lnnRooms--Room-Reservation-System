@@ -16,7 +16,7 @@ function ProfileScreen() {
 
     return (
         <div>
-            <div className="container mt-3">
+            <div className="profileContainer mt-3">
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="Bookings" key="1">
                         <MyBookings />

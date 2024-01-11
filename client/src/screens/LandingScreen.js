@@ -12,7 +12,7 @@ function LandingPage() {
             data-aos-duration="1100"
         >
             <div className="col-md-12 text-center mt-5 ">
-                <h2
+                <h2 className="LandingText"
                     data-aos="zoom-in"
                     data-aos-duration="1300"
                     style={{
