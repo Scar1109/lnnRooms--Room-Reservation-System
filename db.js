@@ -1,7 +1,8 @@
+require('dotenv').config()
 const { default: mongoose } = require("mongoose");
 mongoose.set('strictQuery', true);
 
-var mongoURL = 'mongodb+srv://Scar1109:Scar1234@cluster1109.gdgbtfl.mongodb.net/InnRooms'
+const mongoURL = process.env.MONGODB_URL
 
 mongoose.connect(process.env.MONGODB_URI || mongoURL)
 
