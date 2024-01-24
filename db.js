@@ -1,4 +1,3 @@
-require('dotenv').config()
 const { default: mongoose } = require("mongoose");
 mongoose.set('strictQuery', true);
 

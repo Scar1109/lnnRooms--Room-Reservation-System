@@ -2,11 +2,15 @@ const express = require("express");
 const roomsRoute = require("./routes/roomsRoute");
 const usersRoute = require("./routes/usersRoute");
 const bookingRoute = require("./routes/bookingRoute");
+const session = require("express-session");
+
+require('dotenv').config()
 const path = require("path");
 
 const app = express();
 
 app.use(express.json());
+
 
 const dbConfig = require("./db");
 

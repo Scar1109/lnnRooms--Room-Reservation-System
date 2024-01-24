@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Loader from "../components/Loader";
-import Error from "../components/Error";
+import Loader from "./Loader";
+import Error from "./Error";
 import Swal from "sweetalert2";
 
 function AddRooms() {
