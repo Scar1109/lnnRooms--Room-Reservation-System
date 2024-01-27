@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 const userModel = require("../models/user");
 
 router.post("/register", async (req, res) => {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    req.body.password = hashedPassword;
     const user = new userModel(req.body);
 
     try {
@@ -29,10 +32,9 @@ router.post("/login", async (req, res) => {
 
     try {
         const response = await userModel.findOne({
-            email: email,
-            password: password,
+            email: email
         });
-        if (response) {
+        if (response && await bcrypt.compare(password, response.password)) {
 
             const temp = {
                 _id: response._id,
