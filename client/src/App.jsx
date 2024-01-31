@@ -15,18 +15,15 @@ function App() {
   return (
     <div className="App">
         <Navbar/>
-
-        <BrowserRouter>
+        <BrowserRouter basename="/">
           <Routes>
-
             <Route path="/home" element={<HomeScreen />} exact />
             <Route path="/" element={<LandingScreen />} exact />
             <Route path="/book/:roomId/:fromDate/:toDate" element={<BookingScreen />} exact />
             <Route path='/register' element={<RegistrationPage />} exact />
             <Route path='/login' element={<LoginScreen />} exact />
             <Route path='/profile' element={<ProfileScreen />} exact />
-            <Route path='/admin' element={<AdminScreen />} exact />
-
+            <Route path="/admin/*" element={<AdminScreen />} />
           </Routes>
         </BrowserRouter>    
     </div>

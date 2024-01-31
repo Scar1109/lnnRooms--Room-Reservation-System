@@ -8,12 +8,13 @@ function AdminRooms() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    console.log(process.env.PUBLIC_URL);
 
     useEffect(() => {
         async function fetchRooms() {
             try {
                 setLoading(true);
-                const response = await axios.get("api/rooms/getAllRooms");
+                const response = await axios.get(`${process.env.PUBLIC_URL}/api/rooms/getAllRooms`);
                 setRooms(response.data);
                 setLoading(false);
             } catch (error) {

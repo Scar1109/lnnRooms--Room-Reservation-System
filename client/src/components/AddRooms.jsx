@@ -3,10 +3,13 @@ import axios from "axios";
 import Loader from "./Loader";
 import Error from "./Error";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function AddRooms() {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const [name, setRoomName] = useState("");
     const [roomType, setRoomType] = useState("");
@@ -31,14 +34,14 @@ function AddRooms() {
                 bookedDates: [],
                 description,
             };
-            await axios.post("/api/rooms/addRoom", room);
+            await axios.post(`${process.env.PUBLIC_URL}/api/rooms/addRoom`, room);
             setLoading(false);
             Swal.fire({
                 title: "Room Added Successfully",
                 text: "Press 'OK' to redirect to Room List",
                 icon: "success",
             }).then(results => {
-                window.location.href = '/admin'
+                navigate("/admin/rooms");
             })
         } catch (error) {
             setError(true);
@@ -48,7 +51,7 @@ function AddRooms() {
     }
 
     return (
-        <div className="container">
+        <div className="addrooms">
             {loading ? (
                 <Loader />
             ) : error ? (
