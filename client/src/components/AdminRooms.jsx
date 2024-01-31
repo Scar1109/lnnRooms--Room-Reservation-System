@@ -29,7 +29,7 @@ function AdminRooms() {
     const deleteRoom = (roomId) => {
         try{
             setLoading(true);
-            axios.get(`/api/rooms/deleteRoom/${roomId}`);
+            axios.get(`${process.env.PUBLIC_URL}/api/rooms/deleteRoom/${roomId}`);
             setLoading(false);
             Swal.fire({
                 title: "Room Deleted Successfully",
