@@ -64,7 +64,7 @@ function AdminRooms() {
             ) : error ? (
                 <Error />
             ) : (
-                <div>
+                <div className="table-container">
                     <div class="table-responsive">
                         <table class="table table-striped text-start">
                             <thead class="thead">
